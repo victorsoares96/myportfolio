@@ -29,14 +29,10 @@ export default function Header({ onChangeTheme, isDark }) {
         <Toolbar className={classes.toolbar}>
         <Box flexGrow={1}>
           <Button>
-            <Typography className={classes.toolbar} variant="button" display="block" gutterBottom>
-              PROJETOS
-            </Typography>
+            PROJETOS
           </Button>
           <Button>
-            <Typography className={classes.toolbar} variant="button" display="block" gutterBottom>
-              CURRICULO
-            </Typography>
+            CURRICULO
           </Button>
         </Box>
         <Box>

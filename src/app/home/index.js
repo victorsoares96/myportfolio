@@ -1,19 +1,35 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+
+import {
+  Button,
+  Paper,
+  CssBaseline,
+  Grid,
+  Typography,
+  Container,
+  Avatar,
+  Box,
+  IconButton
+} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Avatar from '@material-ui/core/Avatar';
-import Box from '@material-ui/core/Box';
-import CodeIcon from '@material-ui/icons/Code';
-import TvIcon from '@material-ui/icons/Tv';
+
 import Victor from '../../assets/eu.jpg';
+
+import { 
+  Sobre,
+  Contato,
+  PrincipaisProjetos,
+  Habilidades
+} from './components';
+
+/* Icones */
+import TwitterIcon from '@material-ui/icons/Twitter';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import GitHubIcon from '@material-ui/icons/GitHub';
+import FacebookIcon from '@material-ui/icons/Facebook';
+import InstagramIcon from '@material-ui/icons/Instagram';
+import WhatsAppIcon from '@material-ui/icons/WhatsApp';
+
 const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
@@ -43,12 +59,17 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     width: '224px',
     height: '224px'
-  }
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
 }));
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-export default function Album() {
+export default function Home() {
   const classes = useStyles();
 
   return (
@@ -70,7 +91,7 @@ export default function Album() {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary">
+                  <Button disableElevation variant="contained" color="primary">
                     PROJETOS
                   </Button>
                 </Grid>
@@ -80,39 +101,86 @@ export default function Album() {
                   </Button>
                 </Grid>
               </Grid>
+              <Grid container spacing={3} justify="center">
+              <Grid item>
+              <IconButton href='https://twitter.com/VictorSoares_96'>
+                <TwitterIcon/>
+              </IconButton>
+              <IconButton href='https://linkedin.com/in/victor-soares96'>
+                <LinkedInIcon/>
+              </IconButton>
+              <IconButton href='https://github.com/victorsoares96'>
+                <GitHubIcon/>
+              </IconButton>
+              <IconButton href='https://fb.com/vitor.soares128'>
+                <FacebookIcon/>
+              </IconButton>
+              <IconButton href='http://instagram.com/vitu.soares'>
+                <InstagramIcon/>
+              </IconButton>
+              <IconButton href='https://api.whatsapp.com/send?phone=5585991640770&text=Oi%2C%20queria%20falar%20contigo!'>
+                <WhatsAppIcon/>
+              </IconButton>
+              </Grid>
+              </Grid>
             </div>
           </Container>
         </div>
-        <Container className={classes.cardGrid} maxWidth="md">
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe the content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                  <Button color="basic" size="small" startIcon={<CodeIcon />}>
-                    Source
-                  </Button>
-                  <Button color="basic" size="small" startIcon={<TvIcon />}>
-                    Preview
-                  </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
+        <Container className={classes.cardGrid}>
+          <Grid container spacing={3}>
+          <Grid item xs={12} sm={9}>
+            <Paper className={classes.paper}>
+              <Sobre/>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <Paper className={classes.paper}>
+              <Contato/>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={9}>
+            <Paper className={classes.paper}>
+              <PrincipaisProjetos/>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <Paper className={classes.paper}>
+              <Habilidades/>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={8}>
+            <Paper className={classes.paper}>Educação</Paper>
+          </Grid>
+          <Grid item xs={12} sm={4}>
+            <Paper className={classes.paper}>Linguas</Paper>
+          </Grid>
+          <Grid item xs={12} sm={9}>
+            <Paper className={classes.paper}>Outros Projetos</Paper>
+          </Grid>
+          <Grid item xs={12} sm={9}>
+            <Paper className={classes.paper}>Experiências</Paper>
+          </Grid>
+          <Grid item xs={12} sm={9}>
+            <Paper className={classes.paper}>Meu GitHub</Paper>
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <Paper className={classes.paper}>Meu Currículo</Paper>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+          <Paper className={classes.paper}>xs=12 sm=6</Paper>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}>xs=6 sm=3</Paper>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}>xs=6 sm=3</Paper>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}>xs=6 sm=3</Paper>
+          </Grid>
+          <Grid item xs={6} sm={3}>
+          <Paper className={classes.paper}>xs=6 sm=3</Paper>
+          </Grid>
           </Grid>
         </Container>
       </main>
