@@ -8,13 +8,11 @@ import Button from '@material-ui/core/Button';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles((theme) => ({
-  toolbar: {
+  white: {
     color: '#fff'
   },
 }));
@@ -26,17 +24,17 @@ export default function Header({ onChangeTheme, isDark }) {
     <React.Fragment>
       <CssBaseline />
       <AppBar position="relative">
-        <Toolbar className={classes.toolbar}>
+        <Toolbar className={classes.white}>
         <Box flexGrow={1}>
-          <Button>
-            PROJETOS
+          <Button className={classes.white}>
+            BAIXE ESTE TEMPLATE
           </Button>
-          <Button>
-            CURRICULO
+          <Button className={classes.white}>
+            PROBLEMAS?
           </Button>
         </Box>
         <Box>
-          <IconButton aria-label="delete" className={classes.toolbar} onClick={onChangeTheme}>
+          <IconButton aria-label="delete" className={classes.white} onClick={onChangeTheme}>
             {
               isDark == 'dark' ? <Brightness4Icon /> : <Brightness7Icon />
             }

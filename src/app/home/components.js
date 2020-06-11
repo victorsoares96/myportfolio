@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { loadCSS } from 'fg-loadcss';
+import axios from 'axios';
 import styled from 'styled-components';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 
-import Victor from '../../assets/eu.jpg';
+import {
+  Typography,
+  Button,
+  LinearProgress,
+  Box,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia
+} from '@material-ui/core';
+
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+
+import js from '../../assets/javascript.png';
+import html from '../../assets/html.png';
+import generic_code from '../../assets/generic_code.png';
 /* Icones */
 import Icon from '@material-ui/core/Icon';
 
@@ -39,10 +46,27 @@ const useStyles = makeStyles({
   media: {
     height: 340,
   },
+  card: {
+    marginTop: 20,
+    marginBottom: 20
+  }
 });
 
+const CustomLinearProgress = withStyles((theme) => ({
+  root: {
+    height: 10,
+    borderRadius: 5,
+  },
+  colorPrimary: {
+    backgroundColor: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
+  },
+  bar: {
+    borderRadius: 5,
+    backgroundColor: theme.palette.primary,
+  },
+}))(LinearProgress);
+
 export function Sobre() {
-  const classes = useStyles();
   return (
     <div>
       <StyledTypo variant="h4" gutterBottom>
@@ -81,29 +105,59 @@ export function Contato() {
 
 export function PrincipaisProjetos() {
   const classes = useStyles();
-  function Projetos() {
+  const pinnedRepos = ['coronainfo', 'cantadas', 'CMax_Project', 'victorsoares96'];
+  const [principaisRepos, setPrincipaisRepos] = useState([]);
+  const [isLoad, setLoadStatus] = useState(true);
+  async function getRepoByName(name) {
+    const response = await axios.get('https://api.github.com/users/victorsoares96/repos');
+    (response.data).map((item) => {
+      if(item.name === name) {
+        setPrincipaisRepos(oldRepos => [...oldRepos, item]);
+      }
+    });
+  }
+  function getRepoLanguageImage(name) {
+    var image = 'https://i.imgur.com/wgAPCH6.png';
+    const language = [
+      { language: 'JavaScript', img: 'https://i.imgur.com/N6kc2HK.png'},
+      { language: 'HTML', img: 'https://i.imgur.com/WNRyunb.png?1'},
+    ];
+    language.map((item) => {
+      if(item.language == name) return image = item.img;
+    });
+    return image;
+  }
+  useEffect(() => {
+    async function load() {
+      setLoadStatus(true);
+      await pinnedRepos.map((item) => getRepoByName(item));
+      setLoadStatus(false);
+    }
+    load();
+  }, []);
+  function Projetos({ name, description, html_url, language, homepage}) {
     return (
-      <Card className={classes.root}>
+      <Card className={classes.card}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image={Victor}
-          title="Contemplative Reptile"
+          image={getRepoLanguageImage(language)}
+          title={name}
         />
         <CardContent>
           <StyledTypo gutterBottom variant="h5" component="h2">
-            Titulo do Repositório
+            {name}
           </StyledTypo>
           <StyledTypo variant="body2" color="textSecondary" component="p">
-            Descrição
+            {description}
           </StyledTypo>
         </CardContent>
       </CardActionArea>
       <CardActions>
-      <Button className={classes.button} color="inherit" size="small" startIcon={<CodeIcon />}>
+      <Button href={html_url} className={classes.button} color="inherit" size="small" startIcon={<CodeIcon />}>
         Source
       </Button>
-      <Button className={classes.button} color="inherit" size="small" startIcon={<TvIcon />}>
+      <Button href={homepage} className={classes.button} color="inherit" size="small" startIcon={<TvIcon />}>
         Preview
       </Button>
       </CardActions>
@@ -115,42 +169,36 @@ export function PrincipaisProjetos() {
       <StyledTypo variant="h4" gutterBottom>
         Principais Projetos
       </StyledTypo>
-      <Projetos/>
+      {
+        isLoad == true ?
+        <LoadBar/>
+        :
+        principaisRepos.map((item) => <Projetos name={item.name} description={item.description}
+        html_url={item.html_url} language={item.language} homepage={item.homepage}/>)
+      }
     </div>
   );
 }
 
 export function Habilidades() {
+  const classes = useStyles();
   const skills = [
     { name: 'React.js & React Native', icon: 'fab fa-react', progress: 75 },
     { name: 'Javascript', icon: 'fab fa-js-square', progress: 70 },
-    { name: 'Node.js', icon: 'fab fa-node', progress: 65 },
+    { name: 'Node.js', icon: 'fab fa-node-js', progress: 65 },
     { name: 'Html', icon: 'fab fa-html5', progress: 65 },
     { name: 'Angular8+', icon: 'fab fa-angular', progress: 40 },
     { name: 'Java', icon: 'fab fa-java', progress: 35 },
   ];
-  const SkillProgress = withStyles((theme) => ({
-    root: {
-      height: 10,
-      borderRadius: 5,
-    },
-    colorPrimary: {
-      backgroundColor: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
-    },
-    bar: {
-      borderRadius: 5,
-      backgroundColor: theme.palette.primary,
-    },
-  }))(LinearProgress);
-
-  const classes = useStyles();
+  const [isLoad, setLoadStatus] = useState(true);
   
-  React.useEffect(() => {
+  useEffect(() => {
+    setLoadStatus(true);
     const node = loadCSS(
       'https://use.fontawesome.com/releases/v5.12.0/css/all.css',
       document.querySelector('#font-awesome-css'),
     );
-
+    setLoadStatus(false);
     return () => {
       node.parentNode.removeChild(node);
     };
@@ -159,12 +207,11 @@ export function Habilidades() {
   function Skill({ name, icon, progress}) {
     return (
       <StyledTypo variant="body1" gutterBottom>
-        <Box component="div" display="inline">
-          <Button className={classes.button} startIcon={<Icon className={icon}/>}>
-            {name}
-          </Button>
+        <Box style={{display: 'flex', alignItems: 'center'}} component="div" display="inline">
+          <Icon className={icon}/>
+          <StyledTypo style={{margin: '5px'}}>{name}</StyledTypo>
         </Box>
-        <SkillProgress variant="determinate" value={progress} className={classes.skillProgress}/>
+        <CustomLinearProgress variant="determinate" value={progress} className={classes.skillProgress}/>
       </StyledTypo>
     );
   }
@@ -173,7 +220,48 @@ export function Habilidades() {
       <StyledTypo variant="h4" gutterBottom>
         Habilidades
       </StyledTypo>
-      {skills.map((item) => <Skill key={item.name} name={item.name} icon={item.icon} progress={item.progress}/>)}
+      {
+        isLoad === true ? <LoadBar/>
+        :
+        skills.map((item) => <Skill key={item.name} name={item.name} icon={item.icon} progress={item.progress}/>)
+      }
     </div>
   );
 }
+
+export function Educacao() {
+  return (
+    <StyledTypo variant="h4" gutterBottom>
+      Educação
+      <StyledTypo variant='h6' style={{margin: '5px'}}>Colégio da Policia Militar</StyledTypo>
+      <StyledTypo variant='subtitle2' style={{margin: '5px'}}>Ensino Fundamental e Médio</StyledTypo>
+      <StyledTypo variant='h6' style={{margin: '5px'}}>Unigrande</StyledTypo>
+      <StyledTypo variant='subtitle2' style={{margin: '5px'}}>Sistemas para Internet</StyledTypo>
+    </StyledTypo>
+  )
+}
+
+export function Linguas() {
+  const classes = useStyles();
+  return (
+    <>
+    <StyledTypo variant="h4" gutterBottom>
+      Linguas
+    </StyledTypo>
+    <StyledTypo variant="body1" gutterBottom>
+    <Box style={{display: 'flex', alignItems: 'center'}} component="div" display="inline">
+      <StyledTypo style={{margin: '5px', flexGrow: 1}}>Inglês</StyledTypo>
+      <StyledTypo variant='caption' style={{margin: '5px'}}>Avançado</StyledTypo>
+    </Box>
+    <CustomLinearProgress variant="determinate" value={70} className={classes.skillProgress}/>
+    </StyledTypo>
+    </>
+  )
+}
+
+const LoadBar = () => (
+  <Box display='block' component='div'>
+    <StyledTypo>Carregando...</StyledTypo>
+    <LinearProgress />
+  </Box>
+);

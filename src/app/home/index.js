@@ -19,7 +19,9 @@ import {
   Sobre,
   Contato,
   PrincipaisProjetos,
-  Habilidades
+  Habilidades,
+  Educacao,
+  Linguas
 } from './components';
 
 /* Icones */
@@ -128,59 +130,44 @@ export default function Home() {
         </div>
         <Container className={classes.cardGrid}>
           <Grid container spacing={3}>
-          <Grid item xs={12} sm={9}>
-            <Paper className={classes.paper}>
-              <Sobre/>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <Paper className={classes.paper}>
-              <Contato/>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={9}>
-            <Paper className={classes.paper}>
-              <PrincipaisProjetos/>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <Paper className={classes.paper}>
-              <Habilidades/>
-            </Paper>
-          </Grid>
-          <Grid item xs={12} sm={8}>
-            <Paper className={classes.paper}>Educação</Paper>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Paper className={classes.paper}>Linguas</Paper>
-          </Grid>
-          <Grid item xs={12} sm={9}>
-            <Paper className={classes.paper}>Outros Projetos</Paper>
-          </Grid>
-          <Grid item xs={12} sm={9}>
-            <Paper className={classes.paper}>Experiências</Paper>
-          </Grid>
-          <Grid item xs={12} sm={9}>
-            <Paper className={classes.paper}>Meu GitHub</Paper>
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <Paper className={classes.paper}>Meu Currículo</Paper>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>xs=12 sm=6</Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>xs=6 sm=3</Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>xs=6 sm=3</Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>xs=6 sm=3</Paper>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-          <Paper className={classes.paper}>xs=6 sm=3</Paper>
-          </Grid>
+            <Grid item xs={12} sm={9}>
+              <Paper className={classes.paper}>
+                <Sobre/>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <Paper className={classes.paper}>
+                <Contato/>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} sm={9}>
+              <Paper className={classes.paper}>
+                <PrincipaisProjetos/>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <Paper className={classes.paper}>
+                <Habilidades/>
+              </Paper>
+              <Paper style={{marginTop: 20, marginBottom: 20}} className={classes.paper}>
+                <Educacao/>
+              </Paper>
+              <Paper className={classes.paper}>
+                <Linguas/>
+              </Paper>
+            </Grid>
+            <Grid item xs={12} sm={9}>
+              <Paper className={classes.paper}>Outros Projetos</Paper>
+            </Grid>
+            <Grid item xs={12} sm={9}>
+              <Paper className={classes.paper}>Experiências</Paper>
+            </Grid>
+            <Grid item xs={12} sm={9}>
+              <Paper className={classes.paper}>Meu GitHub</Paper>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <Paper className={classes.paper}>Meu Currículo</Paper>
+            </Grid>
           </Grid>
         </Container>
       </main>
