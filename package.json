@@ -8,6 +8,7 @@
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/react": "^10.0.4",
     "@testing-library/user-event": "^10.1.0",
+    "axios": "^0.19.2",
     "fg-loadcss": "^2.1.0",
     "fontsource-open-sans": "^2.1.3",
     "fontsource-roboto": "^2.1.3",
@@ -18,7 +19,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
