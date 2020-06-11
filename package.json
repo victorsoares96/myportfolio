@@ -8,8 +8,12 @@
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/react": "^10.0.4",
     "@testing-library/user-event": "^10.1.0",
+<<<<<<< HEAD
     "axios": "^0.19.2",
     "fg-loadcss": "^3.1.0",
+=======
+    "fg-loadcss": "^2.1.0",
+>>>>>>> 2a87883f0e76b02ce3d3d844961bded1c08ac008
     "fontsource-open-sans": "^2.1.3",
     "fontsource-roboto": "^2.1.3",
     "react": "^16.13.1",
