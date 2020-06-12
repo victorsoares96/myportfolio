@@ -37,16 +37,14 @@ export default function App() {
     }
   });
   return (
-    <div style={{fontFamily: "Open Sans", fontWeight: 600}}>
-      <head>
-        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
-      </head>
-      <ThemeProvider theme={darkTheme}>
+    <React.Fragment>
+    <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
+    <ThemeProvider theme={darkTheme}>
       <Header onChangeTheme={onChangeTheme} isDark={theme}/>
       <Home/>
       {/*<Projetos/>*/}
       <Footer/>
       </ThemeProvider>
-    </div>
+    </React.Fragment>
   );
 }

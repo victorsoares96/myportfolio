@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   Button,
@@ -13,15 +13,18 @@ import {
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import Victor from '../../assets/eu.jpg';
+import axios from 'axios';
 
+import loading from '../../assets/loading.gif';
 import { 
   Sobre,
   Contato,
   PrincipaisProjetos,
   Habilidades,
   Educacao,
-  Linguas
+  Linguas,
+  Curriculo,
+  OutrosProjetos
 } from './components';
 
 /* Icones */
@@ -66,23 +69,30 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
+    marginTop: 20,
+    marginBottom: 20
   },
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
 export default function Home() {
   const classes = useStyles();
-
+  const [avatar, setAvatar] = useState();
+  useEffect(() => {
+    async function load() {
+      setAvatar(loading);
+      const response = await axios.get(`https://api.github.com/users/victorsoares96/repos`);
+      setAvatar(response.data[0].owner.avatar_url);
+    }
+    load();
+  }, []);
   return (
     <React.Fragment>
       <CssBaseline />
       <main>
-        {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Box justifyContent='center' style={{display: 'flex', margin: '30px'}}>
-              <Avatar alt="Victor Soares" src={Victor} className={classes.avatar}/>
+              <Avatar alt="Victor Soares" src={avatar} className={classes.avatar}/>
             </Box>
             <Typography component="h3" variant="h4" align="center" color="textPrimary" gutterBottom>
               Victor Soares
@@ -134,39 +144,47 @@ export default function Home() {
               <Paper className={classes.paper}>
                 <Sobre/>
               </Paper>
+              <Paper className={classes.paper}>
+                <PrincipaisProjetos/>
+              </Paper>
+              <Paper className={classes.paper}>
+                <OutrosProjetos/>
+              </Paper>
             </Grid>
             <Grid item xs={12} sm={3}>
               <Paper className={classes.paper}>
                 <Contato/>
               </Paper>
-            </Grid>
-            <Grid item xs={12} sm={9}>
-              <Paper className={classes.paper}>
-                <PrincipaisProjetos/>
-              </Paper>
-            </Grid>
-            <Grid item xs={12} sm={3}>
               <Paper className={classes.paper}>
                 <Habilidades/>
               </Paper>
-              <Paper style={{marginTop: 20, marginBottom: 20}} className={classes.paper}>
+              <Paper className={classes.paper}>
                 <Educacao/>
               </Paper>
               <Paper className={classes.paper}>
                 <Linguas/>
               </Paper>
+              <Paper className={classes.paper}>
+                <Curriculo/>
+              </Paper>
+              <Paper className={classes.paper}>
+                Experiências
+              </Paper>
             </Grid>
+            {/*
             <Grid item xs={12} sm={9}>
-              <Paper className={classes.paper}>Outros Projetos</Paper>
+              <Paper className={classes.paper}>
+                <OutrosProjetos/>
+              </Paper>
             </Grid>
+            */}
+            {/*
             <Grid item xs={12} sm={9}>
               <Paper className={classes.paper}>Experiências</Paper>
             </Grid>
+            */}
             <Grid item xs={12} sm={9}>
               <Paper className={classes.paper}>Meu GitHub</Paper>
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              <Paper className={classes.paper}>Meu Currículo</Paper>
             </Grid>
           </Grid>
         </Container>
