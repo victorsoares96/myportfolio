@@ -27,16 +27,13 @@ export default function Header({ onChangeTheme, isDark }) {
         <Toolbar className={classes.white}>
         <Box flexGrow={1}>
           <Button className={classes.white}>
-            BAIXE ESTE TEMPLATE
-          </Button>
-          <Button className={classes.white}>
-            PROBLEMAS?
+            SOBRE
           </Button>
         </Box>
         <Box>
           <IconButton aria-label="delete" className={classes.white} onClick={onChangeTheme}>
             {
-              isDark == 'dark' ? <Brightness4Icon /> : <Brightness7Icon />
+              isDark === 'dark' ? <Brightness4Icon /> : <Brightness7Icon />
             }
           </IconButton>
         </Box>

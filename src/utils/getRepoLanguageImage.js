@@ -6,7 +6,7 @@ export function getRepoLanguageImage(name) {
     { language: 'HTML', img: 'https://i.imgur.com/WNRyunb.png?1'},
   ];
   language.map((item) => {
-    if(item.language == name) return image = item.img;
+    if(item.language === name) return image = item.img;
   });
   return image;
 }

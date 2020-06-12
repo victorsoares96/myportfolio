@@ -1,93 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { loadCSS } from 'fg-loadcss';
 import axios from 'axios';
-import styled from 'styled-components';
 import clsx from 'clsx';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 import {
-  Typography,
   Button,
   IconButton,
   LinearProgress,
   Box,
   Card,
-  CardActionArea,
   CardActions,
-  CardContent,
-  CardMedia,
   Collapse
 } from '@material-ui/core';
 
 import { CardProjeto } from '../../utils/CardProjeto';
-
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { StyledTypo, StyledButton, CustomLinearProgress } from '../../styles';
+import { useStyles } from './styles';
 
 /* Icones */
 import Icon from '@material-ui/core/Icon';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import MailIcon from '@material-ui/icons/Mail';
 import GitHubIcon from '@material-ui/icons/GitHub';
-import CodeIcon from '@material-ui/icons/Code';
-import TvIcon from '@material-ui/icons/Tv';
-
-const StyledTypo = styled(Typography)`
-  text-align: left;
-  font-weight: 600;
-`;
-
-const useStyles = makeStyles((theme) => ({
-  text: {
-    textAlign: 'left',
-    fontWeight: 900
-  },
-  button: {
-    textTransform: 'none',
-    fontWeight: 600,
-    color: 'inherit'
-  },
-  media: {
-    height: 340,
-  },
-  card: {
-    marginTop: 20,
-    marginBottom: 20
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-}));
-
-const CustomLinearProgress = withStyles((theme) => ({
-  root: {
-    height: 10,
-    borderRadius: 5,
-  },
-  colorPrimary: {
-    backgroundColor: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
-  },
-  bar: {
-    borderRadius: 5,
-    backgroundColor: theme.palette.primary,
-  },
-}))(LinearProgress);
-
-const StyledButton = withStyles((theme) => ({
-  root: {
-    fontWeight: 600,
-    color: 'inherit',
-    flex: 1
-  },
-}))(Button);
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 export function Sobre() {
   return (
@@ -160,7 +95,7 @@ export function PrincipaisProjetos() {
         Principais Projetos
       </StyledTypo>
       {
-        isLoad == true ?
+        isLoad === true ?
         <LoadBar/>
         :
         <Card elevation={0}>
@@ -182,8 +117,8 @@ export function PrincipaisProjetos() {
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             {
-              principaisRepos.map((item, index) => index != 0 ?
-              <CardProjeto name={item.name} description={item.description}
+              principaisRepos.map((item, index) => index !== 0 ?
+              <CardProjeto key={item.name} name={item.name} description={item.description}
               html_url={item.html_url} language={item.language} homepage={item.homepage}/>
               : [])
             }
@@ -220,13 +155,13 @@ export function Habilidades() {
   
   function Skill({ name, icon, progress}) {
     return (
-      <StyledTypo variant="body1" gutterBottom>
+      <>
         <Box style={{display: 'flex', alignItems: 'center'}} component="div" display="inline">
           <Icon className={icon}/>
           <StyledTypo style={{margin: '5px'}}>{name}</StyledTypo>
         </Box>
         <CustomLinearProgress variant="determinate" value={progress} className={classes.skillProgress}/>
-      </StyledTypo>
+      </>
     );
   }
   return (
@@ -245,13 +180,15 @@ export function Habilidades() {
 
 export function Educacao() {
   return (
+    <>
     <StyledTypo variant="h4" gutterBottom>
       Educação
-      <StyledTypo variant='h6' style={{margin: '5px'}}>Colégio da Policia Militar</StyledTypo>
-      <StyledTypo variant='subtitle2' style={{margin: '5px'}}>Ensino Fundamental e Médio</StyledTypo>
-      <StyledTypo variant='h6' style={{margin: '5px'}}>Unigrande</StyledTypo>
-      <StyledTypo variant='subtitle2' style={{margin: '5px'}}>Sistemas para Internet</StyledTypo>
     </StyledTypo>
+    <StyledTypo variant='h6' style={{margin: '5px'}}>Colégio da Policia Militar</StyledTypo>
+    <StyledTypo variant='subtitle2' style={{margin: '5px'}}>Ensino Fundamental e Médio</StyledTypo>
+    <StyledTypo variant='h6' style={{margin: '5px'}}>Unigrande</StyledTypo>
+    <StyledTypo variant='subtitle2' style={{margin: '5px'}}>Sistemas para Internet</StyledTypo>
+    </>
   )
 }
 
@@ -262,13 +199,13 @@ export function Linguas() {
   ];
   function Lingua({linguas}) {
     return (
-      <StyledTypo variant="body1" gutterBottom>
+      <>
         <Box style={{display: 'flex', alignItems: 'center'}} component="div" display="inline">
           <StyledTypo style={{margin: '5px', flexGrow: 1}}>{linguas.name}</StyledTypo>
           <StyledTypo variant='caption' style={{margin: '5px'}}>{linguas.skill}</StyledTypo>
         </Box>
         <CustomLinearProgress variant="determinate" value={linguas.progress} className={classes.skillProgress}/>
-      </StyledTypo>
+      </>
     );
   }
   const classes = useStyles();
@@ -278,21 +215,20 @@ export function Linguas() {
       Linguas
     </StyledTypo>
     {
-      linguas.map((item) => <Lingua linguas={item}/>)
+      linguas.map((item) => <Lingua key={item.name} linguas={item}/>)
     }
     </>
   )
 }
 
 export function Curriculo() {
-  const classes = useStyles();
   return (
     <>
       <StyledTypo variant="h4" gutterBottom>
         Meu Curriculo
       </StyledTypo>
       <Box display='flex' component='div'>
-        <StyledButton variant='contained' color='primary'
+        <StyledButton style={{color: '#f5f5f5'}} variant='contained' color='primary'
         href='' disableElevation download>
           BAIXAR CURRICULO
         </StyledButton>
@@ -310,9 +246,9 @@ export function OutrosProjetos() {
   async function loadOtherRepos(pinned) {
     const response = await axios.get('https://api.github.com/users/victorsoares96/repos');
     let otherRepos = response.data.filter((repo) => {
-      if(repo.fork == false) {
-        return repo.name != pinned[0] && repo.name != pinned[1] &&
-        repo.name != pinned[2] && repo.name != pinned[3];
+      if(repo.fork === false) {
+        return repo.name !== pinned[0] && repo.name !== pinned[1] &&
+        repo.name !== pinned[2] && repo.name !== pinned[3];
       }
     });
     setOutrosRepos(otherRepos);
@@ -337,7 +273,7 @@ export function OutrosProjetos() {
         Outros Projetos
       </StyledTypo>
       {
-        isLoad == true ?
+        isLoad === true ?
         <LoadBar/>
         :
         <Card elevation={0}>
@@ -359,8 +295,8 @@ export function OutrosProjetos() {
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             {
-              outrosRepos.map((item, index) => index != 0 ?
-              <CardProjeto name={item.name} description={item.description}
+              outrosRepos.map((item, index) => index !== 0 ?
+              <CardProjeto key={item.name} name={item.name} description={item.description}
               html_url={item.html_url} language={item.language} homepage={item.homepage}/>
               : [])
             }
@@ -368,6 +304,16 @@ export function OutrosProjetos() {
         </Card>
       }
     </div>
+  );
+}
+
+export function Experiencia() {
+  return (
+    <>
+      <StyledTypo variant="h4" gutterBottom>
+        Experiências
+      </StyledTypo>
+    </>
   );
 }
 

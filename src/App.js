@@ -1,8 +1,7 @@
 import "fontsource-open-sans"
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Button from '@material-ui/core/Button';
+//import ReactDOM from 'react-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
 import green from '@material-ui/core/colors/green';
@@ -10,15 +9,15 @@ import green from '@material-ui/core/colors/green';
 import Header from './app/shared/header';
 import Footer from './app/shared/footer';
 import Home from './app/home';
-import Projetos from './app/projetos';
+//import Projetos from './app/projetos';
 
 import usePersistedState from './utils/usePersistedState';
 
 export default function App() {
   const [theme, setTheme] = usePersistedState('theme', 'light');
-  const palletType = theme == 'light' ? 'dark' : 'light'
+  const palletType = theme === 'light' ? 'dark' : 'light'
   const onChangeTheme = () => {
-    setTheme(theme == 'light' ? 'dark' : 'light');
+    setTheme(theme === 'light' ? 'dark' : 'light');
   }
   const darkTheme = createMuiTheme({
     palette: {

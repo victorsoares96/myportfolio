@@ -24,7 +24,8 @@ import {
   Educacao,
   Linguas,
   Curriculo,
-  OutrosProjetos
+  OutrosProjetos,
+  Experiencia
 } from './components';
 
 /* Icones */
@@ -168,8 +169,11 @@ export default function Home() {
                 <Curriculo/>
               </Paper>
               <Paper className={classes.paper}>
-                Experiências
+                <Experiencia/>
               </Paper>
+            </Grid>
+            <Grid item xs={12} sm={9}>
+              <Paper className={classes.paper}>Meu GitHub</Paper>
             </Grid>
             {/*
             <Grid item xs={12} sm={9}>
@@ -183,9 +187,6 @@ export default function Home() {
               <Paper className={classes.paper}>Experiências</Paper>
             </Grid>
             */}
-            <Grid item xs={12} sm={9}>
-              <Paper className={classes.paper}>Meu GitHub</Paper>
-            </Grid>
           </Grid>
         </Container>
       </main>
