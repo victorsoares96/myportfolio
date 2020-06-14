@@ -16,7 +16,8 @@ import { CardProjeto } from '../../utils/CardProjeto';
 import { StyledTypo, StyledButton, CustomLinearProgress } from '../../styles';
 import { useStyles } from './styles';
 
-import { config } from '../config';
+import CurriculoPDF from '../../assets/curriculo.pdf';
+import { config, userAuth } from '../config';
 
 /* Icones */
 import Icon from '@material-ui/core/Icon';
@@ -69,7 +70,7 @@ export function PrincipaisProjetos() {
   const [isLoad, setLoadStatus] = useState(true);
   
   async function getRepoByName(name) {
-    const response = await axios.get(`https://api.github.com/users/victorsoares96/repos`);
+    const response = await axios.get(`https://api.github.com/users/victorsoares96/repos`, userAuth);
     (response.data).map((item) => {
       if(item.name === name) {
         setPrincipaisRepos(oldRepos => [...oldRepos, item]);
@@ -86,7 +87,7 @@ export function PrincipaisProjetos() {
     load();
   }, []);
   
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -216,17 +217,15 @@ export function Linguas() {
 }
 
 export function Curriculo() {
-  function generatePDF() {
-  }
   return (
     <>
       <StyledTypo variant="h4" gutterBottom>
         Meu Curriculo
       </StyledTypo>
-      <Box display='flex' component='div'>
+      <Box display='flex' component='div'>     
         <StyledButton style={{color: '#f5f5f5'}} variant='contained' color='primary'
-        href='' disableElevation download onClick={generatePDF()}>
-          BAIXAR CURRICULO
+          disableElevation href={CurriculoPDF} download="João Victor Moreira Soares.pdf">
+            BAIXAR CURRICULO
         </StyledButton>
       </Box>
     </>
@@ -240,7 +239,7 @@ export function OutrosProjetos() {
   const [isLoad, setLoadStatus] = useState(true);
   
   async function loadOtherRepos(pinned) {
-    const response = await axios.get('https://api.github.com/users/victorsoares96/repos');
+    const response = await axios.get('https://api.github.com/users/victorsoares96/repos', userAuth);
     let otherRepos = response.data.filter((repo) => {
       if(repo.fork === false) {
         return repo.name !== pinned[0] && repo.name !== pinned[1] &&
@@ -313,7 +312,10 @@ export function Experiencia() {
       <StyledTypo variant="h4" gutterBottom>
         Experiências
       </StyledTypo>
-      <WorkInProgress/>
+      <Box display='block' component='div'>
+        <StyledTypo>A procura da primeira...</StyledTypo>
+        <LinearProgress style={{marginTop: '5px'}}/>
+      </Box>
     </>
   );
 }

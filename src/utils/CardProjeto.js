@@ -54,7 +54,7 @@ export function CardProjeto({ name, description, html_url, language, homepage })
     <Button href={html_url} className={classes.button} color="inherit" size="small" startIcon={<CodeIcon />}>
       Source
     </Button>
-    <Button href={homepage} disabled={homepage == null ? true : false} 
+    <Button href={homepage} disabled={homepage == null || homepage === '' ? true : false} 
     className={classes.button} color="inherit" size="small" startIcon={<TvIcon />}>
       Preview
     </Button>

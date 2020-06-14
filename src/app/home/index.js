@@ -34,7 +34,7 @@ export default function Home() {
               <Paper className={classes.paper}>
                 <Sobre/>
               </Paper>
-              <Paper className={classes.paper}>
+              <Paper id='projects' className={classes.paper}>
                 <PrincipaisProjetos/>
               </Paper>
               <Paper className={classes.paper}>

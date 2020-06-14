@@ -17,7 +17,7 @@ import {
 } from '@material-ui/core';
 
 /* Config */
-import { config } from '../../config';
+import { config, userAuth } from '../../config';
 
 /* HTTP Client */
 import axios from 'axios';
@@ -31,23 +31,15 @@ import { AvatarProgress } from '../../../styles';
 import { useStyles } from './styles';
 import { SocialMedias, Sobre } from './components';
 
-/*const data = [
-  { link: 'https://twitter.com/VictorSoares_96', socialIcon: 'fab fa-twitter' },
-  { link: 'https://linkedin.com/in/victor-soares96', socialIcon: 'fab fa-linkedin' },
-  { link: 'https://github.com/victorsoares96', socialIcon: 'fab fa-github' },
-  { link: 'https://fb.com/vitor.soares128', socialIcon: 'fab fa-facebook' },
-  { link: 'http://instagram.com/vitu.soares', socialIcon: 'fab fa-instagram' },
-  { link: 'https://api.whatsapp.com/send?phone=5585991640770&text=Oi%2C%20queria%20falar%20contigo!', socialIcon: 'fab fa-whatsapp' },
-];*/
-
 export default function Header({ onChangeTheme, isDark }) {
   const classes = useStyles();
   const { name, programmer, socialMedias } = config;
   const [avatar, setAvatar] = useState(null);
   useEffect(() => {
+    
     async function loadAvatar() {
-      const response = await axios.get(`https://api.github.com/users/victorsoares96/repos`);
-      setAvatar(response.data[0].owner.avatar_url);
+      const response = await axios.get('https://api.github.com/users/victorsoares96', userAuth);
+      setAvatar(response.data.avatar_url);
     }
     loadAvatar();
   }, []);
@@ -82,7 +74,7 @@ export default function Header({ onChangeTheme, isDark }) {
           <div className={classes.contentButtons}>
             <Grid container spacing={2} justify="center">
               <Grid item>
-                <Button disableElevation variant="contained" color="primary">
+                <Button href='#projects' disableElevation variant="contained" color="primary">
                   PROJETOS
                 </Button>
               </Grid>
