@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { loadCSS } from 'fg-loadcss';
 import axios from 'axios';
 import clsx from 'clsx';
-import GitHubCalendar from 'github-calendar';
 
 import {
   Button,
@@ -320,7 +319,6 @@ export function Experiencia() {
 }
 
 export function MeuGithub() {
-  GitHubCalendar(".calendar", "victorsoares96");
   return (
     <>
       <StyledTypo variant="h4" gutterBottom>
