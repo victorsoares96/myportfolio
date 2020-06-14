@@ -1,4 +1,9 @@
-import { Typography, Button, LinearProgress } from '@material-ui/core';
+import { 
+  Typography, 
+  Button, 
+  LinearProgress, 
+  CircularProgress,
+} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 export const StyledTypo = withStyles((theme) => ({
@@ -29,3 +34,13 @@ export const CustomLinearProgress = withStyles((theme) => ({
     backgroundColor: theme.palette.primary,
   },
 }))(LinearProgress);
+
+export const AvatarProgress = withStyles((theme) => ({
+  root: {
+    width: '50px',
+    height: '150px'
+  },
+  circle: {
+    strokeLinecap: 'round',
+  },
+}))(CircularProgress);

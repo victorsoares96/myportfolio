@@ -1,7 +1,6 @@
 import "fontsource-open-sans"
 
 import React from 'react';
-//import ReactDOM from 'react-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import purple from '@material-ui/core/colors/purple';
 import green from '@material-ui/core/colors/green';
@@ -19,7 +18,7 @@ export default function App() {
   const onChangeTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   }
-  const darkTheme = createMuiTheme({
+  const theme_ = createMuiTheme({
     palette: {
       type: palletType,
       primary: purple,
@@ -33,16 +32,16 @@ export default function App() {
       button: {
         textTransform: 'none'
       }
-    }
+    },
   });
   return (
     <React.Fragment>
-    <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
-    <ThemeProvider theme={darkTheme}>
-      <Header onChangeTheme={onChangeTheme} isDark={theme}/>
-      <Home/>
-      {/*<Projetos/>*/}
-      <Footer/>
+      <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
+      <ThemeProvider theme={theme_}>
+        <Header onChangeTheme={onChangeTheme} isDark={theme}/>
+        <Home/>
+        {/*<Projetos/>*/}
+        <Footer/>
       </ThemeProvider>
     </React.Fragment>
   );

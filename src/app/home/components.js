@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { loadCSS } from 'fg-loadcss';
 import axios from 'axios';
 import clsx from 'clsx';
+import GitHubCalendar from 'github-calendar';
 
 import {
   Button,
-  IconButton,
   LinearProgress,
   Box,
   Card,
@@ -17,6 +17,8 @@ import { CardProjeto } from '../../utils/CardProjeto';
 import { StyledTypo, StyledButton, CustomLinearProgress } from '../../styles';
 import { useStyles } from './styles';
 
+import { config } from '../config';
+
 /* Icones */
 import Icon from '@material-ui/core/Icon';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -25,15 +27,14 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 export function Sobre() {
+  const { about } = config;
   return (
     <div>
       <StyledTypo variant="h4" gutterBottom>
         Sobre
       </StyledTypo>
       <StyledTypo variant="body1" gutterBottom>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur
-        unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam
-        dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.
+        {about}
       </StyledTypo>
     </div>
   );
@@ -41,19 +42,20 @@ export function Sobre() {
 
 export function Contato() {
   const classes = useStyles();
+  const { locationLink, emailLink, githubLink } = config.contact;
   return (
     <div>
       <StyledTypo variant="h4" gutterBottom>
         Contato
       </StyledTypo>
       <StyledTypo variant="body1" gutterBottom>
-        <Button className={classes.button} href="https://github.com" startIcon={<LocationOnIcon/>}>
+        <Button className={classes.button} href={locationLink} startIcon={<LocationOnIcon/>}>
           Fortaleza, Ceará, Brasil
         </Button>
-        <Button className={classes.button} href="mailto:vitorsoares96@hotmail.com" startIcon={<MailIcon/>}>
+        <Button className={classes.button} href={`mailto:${emailLink}`} startIcon={<MailIcon/>}>
           vitorsoares96@hotmail.com
         </Button>
-        <Button className={classes.button} href="https://github.com/victorsoares96" startIcon={<GitHubIcon/>}>
+        <Button className={classes.button} href={githubLink} startIcon={<GitHubIcon/>}>
           github.com/victorsoares96
         </Button>
       </StyledTypo>
@@ -63,7 +65,7 @@ export function Contato() {
 
 export function PrincipaisProjetos() {
   const classes = useStyles();
-  const pinnedRepos = ['coronainfo', 'cantadas', 'CMax_Project', 'victorsoares96'];
+  const { pinnedRepos } = config;
   const [principaisRepos, setPrincipaisRepos] = useState([]);
   const [isLoad, setLoadStatus] = useState(true);
   
@@ -104,16 +106,20 @@ export function PrincipaisProjetos() {
           html_url={principaisRepos[0]?.html_url} language={principaisRepos[0]?.language}
           homepage={principaisRepos[0]?.homepage}/>
           <CardActions disableSpacing>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-          <ExpandMoreIcon />
-          </IconButton>
+            <Button style={{marginLeft: 'auto', alignItems: 'center', display: 'flex'}} onClick={handleExpandClick} endIcon={
+              <ExpandMoreIcon className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded})}/>}>
+              { 
+                expanded === false ? 
+                <StyledTypo variant='caption' style={{marginTop: '1px'}}>
+                  Mostrar mais
+                </StyledTypo> 
+                : 
+                <StyledTypo variant='caption' style={{marginTop: '1px'}}>
+                  Mostrar menos
+                </StyledTypo>
+              }
+            </Button>
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             {
@@ -131,14 +137,7 @@ export function PrincipaisProjetos() {
 
 export function Habilidades() {
   const classes = useStyles();
-  const skills = [
-    { name: 'React.js & React Native', icon: 'fab fa-react', progress: 75 },
-    { name: 'Javascript', icon: 'fab fa-js-square', progress: 70 },
-    { name: 'Node.js', icon: 'fab fa-node-js', progress: 65 },
-    { name: 'Html', icon: 'fab fa-html5', progress: 65 },
-    { name: 'Angular8+', icon: 'fab fa-angular', progress: 40 },
-    { name: 'Java', icon: 'fab fa-java', progress: 35 },
-  ];
+  const { skills } = config;
   const [isLoad, setLoadStatus] = useState(true);
   
   useEffect(() => {
@@ -152,7 +151,6 @@ export function Habilidades() {
       node.parentNode.removeChild(node);
     };
   }, []);
-  
   function Skill({ name, icon, progress}) {
     return (
       <>
@@ -179,49 +177,48 @@ export function Habilidades() {
 }
 
 export function Educacao() {
+  const { education } = config;
+  const EducationItem = ({local, graduation}) => (
+    <>
+      <StyledTypo variant='h6' style={{margin: '5px'}}>{local}</StyledTypo>
+      <StyledTypo variant='subtitle2' style={{margin: '5px'}}>{graduation}</StyledTypo>
+    </>
+  );
   return (
     <>
     <StyledTypo variant="h4" gutterBottom>
       Educação
     </StyledTypo>
-    <StyledTypo variant='h6' style={{margin: '5px'}}>Colégio da Policia Militar</StyledTypo>
-    <StyledTypo variant='subtitle2' style={{margin: '5px'}}>Ensino Fundamental e Médio</StyledTypo>
-    <StyledTypo variant='h6' style={{margin: '5px'}}>Unigrande</StyledTypo>
-    <StyledTypo variant='subtitle2' style={{margin: '5px'}}>Sistemas para Internet</StyledTypo>
+    {education.map((item) => <EducationItem local={item.local} graduation={item.graduation}/>)}
     </>
   )
 }
 
 export function Linguas() {
-  const linguas = [
-    { name: 'Inglês', skill: 'Intermediário', progress: 65 },
-    { name: 'Português', skill: 'Avançado', progress: 95 }
-  ];
-  function Lingua({linguas}) {
-    return (
-      <>
-        <Box style={{display: 'flex', alignItems: 'center'}} component="div" display="inline">
-          <StyledTypo style={{margin: '5px', flexGrow: 1}}>{linguas.name}</StyledTypo>
-          <StyledTypo variant='caption' style={{margin: '5px'}}>{linguas.skill}</StyledTypo>
-        </Box>
-        <CustomLinearProgress variant="determinate" value={linguas.progress} className={classes.skillProgress}/>
-      </>
-    );
-  }
   const classes = useStyles();
+  const { languages } = config;
+  const Lingua = ({linguas}) => (
+    <>
+      <Box style={{display: 'flex', alignItems: 'center'}} component="div" display="inline">
+        <StyledTypo style={{margin: '5px', flexGrow: 1}}>{linguas.name}</StyledTypo>
+        <StyledTypo variant='caption' style={{margin: '5px'}}>{linguas.skill}</StyledTypo>
+      </Box>
+      <CustomLinearProgress variant="determinate" value={linguas.progress} className={classes.skillProgress}/>
+    </>
+  );
   return (
     <>
     <StyledTypo variant="h4" gutterBottom>
       Linguas
     </StyledTypo>
-    {
-      linguas.map((item) => <Lingua key={item.name} linguas={item}/>)
-    }
+    {languages.map((item) => <Lingua key={item.name} linguas={item}/>)}
     </>
-  )
+  );
 }
 
 export function Curriculo() {
+  function generatePDF() {
+  }
   return (
     <>
       <StyledTypo variant="h4" gutterBottom>
@@ -229,7 +226,7 @@ export function Curriculo() {
       </StyledTypo>
       <Box display='flex' component='div'>
         <StyledButton style={{color: '#f5f5f5'}} variant='contained' color='primary'
-        href='' disableElevation download>
+        href='' disableElevation download onClick={generatePDF()}>
           BAIXAR CURRICULO
         </StyledButton>
       </Box>
@@ -239,7 +236,7 @@ export function Curriculo() {
 
 export function OutrosProjetos() {
   const classes = useStyles();
-  const pinnedRepos = ['coronainfo', 'cantadas', 'CMax_Project', 'victorsoares96'];
+  const { pinnedRepos } = config;
   const [outrosRepos, setOutrosRepos] = useState([]);
   const [isLoad, setLoadStatus] = useState(true);
   
@@ -263,7 +260,7 @@ export function OutrosProjetos() {
     load();
   }, []);
   
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -282,16 +279,20 @@ export function OutrosProjetos() {
           html_url={outrosRepos[0].html_url} language={outrosRepos[0].language}
           homepage={outrosRepos[0].homepage}/>
           <CardActions disableSpacing>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-          <ExpandMoreIcon />
-          </IconButton>
+            <Button style={{marginLeft: 'auto', alignItems: 'center', display: 'flex'}} onClick={handleExpandClick} endIcon={
+              <ExpandMoreIcon className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded})}/>}>
+              { 
+                expanded === false ? 
+                <StyledTypo variant='caption' style={{marginTop: '1px'}}>
+                  Mostrar mais
+                </StyledTypo> 
+                : 
+                <StyledTypo variant='caption' style={{marginTop: '1px'}}>
+                  Mostrar menos
+                </StyledTypo>
+              }
+            </Button>
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             {
@@ -313,6 +314,19 @@ export function Experiencia() {
       <StyledTypo variant="h4" gutterBottom>
         Experiências
       </StyledTypo>
+      <WorkInProgress/>
+    </>
+  );
+}
+
+export function MeuGithub() {
+  GitHubCalendar(".calendar", "victorsoares96");
+  return (
+    <>
+      <StyledTypo variant="h4" gutterBottom>
+        Meu GitHub
+      </StyledTypo>
+      <WorkInProgress/>
     </>
   );
 }
@@ -320,6 +334,13 @@ export function Experiencia() {
 const LoadBar = () => (
   <Box display='block' component='div'>
     <StyledTypo>Carregando...</StyledTypo>
-    <LinearProgress />
+    <LinearProgress style={{marginTop: '5px'}}/>
+  </Box>
+);
+
+const WorkInProgress = () => (
+  <Box display='block' component='div'>
+    <StyledTypo>Em progresso...</StyledTypo>
+    <LinearProgress style={{marginTop: '5px'}}/>
   </Box>
 );
