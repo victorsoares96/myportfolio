@@ -17,7 +17,7 @@ import {
 } from '@material-ui/core';
 
 /* Config */
-import { config, userAuth } from '../../config';
+import { config } from '../../config';
 
 /* HTTP Client */
 import axios from 'axios';
@@ -29,16 +29,15 @@ import Brightness4Icon from '@material-ui/icons/Brightness4';
 /* Custom components and stylesheet */
 import { AvatarProgress } from '../../../styles';
 import { useStyles } from './styles';
-import { SocialMedias, Sobre } from './components';
+import { SocialMedias, AboutButton } from './components';
 
 export default function Header({ onChangeTheme, isDark }) {
   const classes = useStyles();
-  const { name, programmer, socialMedias } = config;
+  const { name, programmer, socialMedias, githubUser } = config;
   const [avatar, setAvatar] = useState(null);
   useEffect(() => {
-    
     async function loadAvatar() {
-      const response = await axios.get('https://api.github.com/users/victorsoares96', userAuth);
+      const response = await axios.get(`https://api.github.com/users/${githubUser}`);
       setAvatar(response.data.avatar_url);
     }
     loadAvatar();
@@ -49,7 +48,7 @@ export default function Header({ onChangeTheme, isDark }) {
       <AppBar position="relative">
         <Toolbar className={classes.headerColor}>
         <Box flexGrow={1}>
-          <Sobre className={classes.headerColor}/>
+          <AboutButton className={classes.headerColor}/>
         </Box>
         <Box>
           <IconButton aria-label="delete" className={classes.headerColor} onClick={onChangeTheme}>
@@ -61,7 +60,7 @@ export default function Header({ onChangeTheme, isDark }) {
       <div className={classes.content}>
         <Container maxWidth="sm">
           <Box justifyContent='center' style={{display: 'flex', margin: '30px'}}>
-            <Avatar alt='Victor Soares' src={avatar} className={classes.avatar}>
+            <Avatar alt={name} src={avatar} className={classes.avatar}>
               {<AvatarProgress size={80}/>}
             </Avatar>
           </Box>
@@ -75,12 +74,12 @@ export default function Header({ onChangeTheme, isDark }) {
             <Grid container spacing={2} justify="center">
               <Grid item>
                 <Button href='#projects' disableElevation variant="contained" color="primary">
-                  PROJETOS
+                  Projects
                 </Button>
               </Grid>
               <Grid item>
                 <Button href={socialMedias[5].link} variant="outlined" color="primary">
-                  CONTATE-ME
+                  Contact-me
                 </Button>
               </Grid>
             </Grid>

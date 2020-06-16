@@ -31,7 +31,7 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-export function CardProjeto({ name, description, html_url, language, homepage }) {
+export function ProjectCard({ name, description, html_url, language, homepage }) {
   const classes = useStyle();
   return (
     <Card className={classes.card}>

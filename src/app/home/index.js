@@ -10,16 +10,16 @@ import {
 import { useStyles } from './styles';
 
 import { 
-  Sobre,
-  Contato,
-  PrincipaisProjetos,
-  Habilidades,
-  Educacao,
-  Linguas,
-  Curriculo,
-  OutrosProjetos,
-  Experiencia,
-  MeuGithub
+  About,
+  Contact,
+  MainProjects,
+  Skills,
+  Education,
+  Languages,
+  Curriculum,
+  OtherProjects,
+  Experience,
+  MyGithub
 } from './components';
 
 export default function Home() {
@@ -32,36 +32,36 @@ export default function Home() {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={9}>
               <Paper className={classes.paper}>
-                <Sobre/>
+                <About/>
               </Paper>
               <Paper id='projects' className={classes.paper}>
-                <PrincipaisProjetos/>
+                <MainProjects/>
               </Paper>
               <Paper className={classes.paper}>
-                <OutrosProjetos/>
+                <OtherProjects/>
               </Paper>
-              <Paper className={classes.paper}>
-                <MeuGithub/>
-              </Paper>
+              {/*<Paper className={classes.paper}>
+                <MyGithub/>
+              </Paper>*/}
             </Grid>
             <Grid item xs={12} sm={3}>
               <Paper className={classes.paper}>
-                <Contato/>
+                <Contact/>
               </Paper>
               <Paper className={classes.paper}>
-                <Habilidades/>
+                <Skills/>
               </Paper>
               <Paper className={classes.paper}>
-                <Educacao/>
+                <Education/>
               </Paper>
               <Paper className={classes.paper}>
-                <Linguas/>
+                <Languages/>
               </Paper>
               <Paper className={classes.paper}>
-                <Curriculo/>
+                <Curriculum/>
               </Paper>
               <Paper className={classes.paper}>
-                <Experiencia/>
+                <Experience/>
               </Paper>
             </Grid>
             {/*

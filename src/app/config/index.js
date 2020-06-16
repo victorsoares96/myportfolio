@@ -1,35 +1,37 @@
 export const config = {
-  name: 'Victor Soares',
-  programmer: 'Web & Mobile Front-End Developer',
-  about: `Olá! Sou um desenvolvedor web e mobile front-end 
-  apaixonado por tecnologia e que adora aplicar o seu conhecimento 
-  para resolver problemas, criar aplicações web e mobile!
-  Comecei a desenvolver aplicações web e mobile durante a 
-  faculdade e desde aí não parei mais, a cada aplicação 
-  ou site criado meu interesse por essa área aumentava. 
-  Atualmente estou a procura de um desafio, seja como 
-  programador júnior ou estagiário!`,
+  name: 'My Name',
+  programmer: 'A Web & Mobile Front-End Developer',
+  about: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+  sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+  nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
+  reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
+  pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+  culpa qui officia deserunt mollit anim id est laborum.`,
+  githubUser: 'my_githubuser',
   pinnedRepos: ['coronainfo', 'cantadas', 'CMax_Project', 'victorsoares96'],
   contact: {
+    location: 'Fortaleza, Ceará, Brasil',
     locationLink: '',
-    emailLink: 'vitorsoares96@hotmail.com',
-    githubLink: 'https://github.com/victorsoares96'
+    email: '',
+    emailLink: 'my_email@hotmail.com',
+    githubLink: 'github.com/my_user'
   },
   education: [
-    { local: 'Colégio da Policia Militar', graduation: 'Ensino Fundamental e Médio' },
-    { local: 'Unigrande', graduation: 'Sistemas para Internet' },
+    { local: 'University Lorem', graduation: 'Computer Science' },
+    { local: 'Course Ipsum', graduation: 'Front End Development' },
   ],
   languages: [
-    { name: 'Inglês', skill: 'Intermediário', progress: 65 },
-    { name: 'Português', skill: 'Avançado', progress: 95 }
+    { name: 'English', skill: 'Advanced', progress: 95 },
+    { name: 'Portuguese', skill: 'Intermediate', progress: 55 }
   ],
   socialMedias: [
-    { link: 'https://twitter.com/VictorSoares_96', socialIcon: 'fab fa-twitter', name: '@VictorSoares_96' },
-    { link: 'https://linkedin.com/in/victor-soares96', socialIcon: 'fab fa-linkedin', name: 'linkedin.com/in/victor-soares96' },
-    { link: 'https://github.com/victorsoares96', socialIcon: 'fab fa-github', name: 'github.com/victorsoares96' },
-    { link: 'https://fb.com/vitor.soares128', socialIcon: 'fab fa-facebook', name: 'fb.com/vitor.soares128' },
-    { link: 'http://instagram.com/vitu.soares', socialIcon: 'fab fa-instagram', name: 'vitu.soares' },
-    { link: 'https://api.whatsapp.com/send?phone=5585991640770&text=Oi%2C%20queria%20falar%20contigo!', socialIcon: 'fab fa-whatsapp', name: '(85) 99164 0770' }
+    { link: 'https://twitter.com/my_user', socialIcon: 'fab fa-twitter', name: '@My_User' },
+    { link: 'https://linkedin.com/in/my_user', socialIcon: 'fab fa-linkedin', name: 'linkedin.com/in/My_User' },
+    { link: 'https://github.com/my_user', socialIcon: 'fab fa-github', name: 'github.com/my_user' },
+    { link: 'https://fb.com/my_user', socialIcon: 'fab fa-facebook', name: 'fb.com/my_user' },
+    { link: 'http://instagram.com/my_user', socialIcon: 'fab fa-instagram', name: 'my_user' },
+    { link: 'https://api.whatsapp.com/send?phone={MY_PHONE_NUMBER}&text=HI!%2C%20I Would%20talk%20with you!', socialIcon: 'fab fa-whatsapp', name: '{MY_PHONE_NUMBER}' }
   ],
   skills: [
     { name: 'React.js & React Native', icon: 'fab fa-react', progress: 75 },
@@ -40,11 +42,4 @@ export const config = {
     { name: 'Java', icon: 'fab fa-java', progress: 35 }
   ],
   sourceCodeLink: 'https://github.com/victorsoares96/portfolio'
-};
-
-export const userAuth = {
-  auth: { 
-    username: 'victorsoares96', 
-    password: '5ce245a3e36852f794a0fa1c4e89219fe111a0de' 
-  }
 };

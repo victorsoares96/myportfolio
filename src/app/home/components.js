@@ -12,12 +12,12 @@ import {
   Collapse
 } from '@material-ui/core';
 
-import { CardProjeto } from '../../utils/CardProjeto';
+import { ProjectCard } from '../../utils/CardProjeto';
 import { StyledTypo, StyledButton, CustomLinearProgress } from '../../styles';
 import { useStyles } from './styles';
 
 import CurriculoPDF from '../../assets/curriculo.pdf';
-import { config, userAuth } from '../config';
+import { config } from '../config';
 
 /* Icones */
 import Icon from '@material-ui/core/Icon';
@@ -26,12 +26,12 @@ import MailIcon from '@material-ui/icons/Mail';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-export function Sobre() {
+export function About() {
   const { about } = config;
   return (
     <div>
       <StyledTypo variant="h4" gutterBottom>
-        Sobre
+        About
       </StyledTypo>
       <StyledTypo variant="body1" gutterBottom>
         {about}
@@ -40,44 +40,47 @@ export function Sobre() {
   );
 }
 
-export function Contato() {
+export function Contact() {
   const classes = useStyles();
-  const { locationLink, emailLink, githubLink } = config.contact;
+  const { location, locationLink, emailLink, githubLink } = config.contact;
   return (
     <div>
       <StyledTypo variant="h4" gutterBottom>
-        Contato
+        Contact
       </StyledTypo>
       <StyledTypo variant="body1" gutterBottom>
         <Button className={classes.button} href={locationLink} startIcon={<LocationOnIcon/>}>
-          Fortaleza, Ceará, Brasil
+          {location}
         </Button>
         <Button className={classes.button} href={`mailto:${emailLink}`} startIcon={<MailIcon/>}>
-          vitorsoares96@hotmail.com
+          {emailLink}
         </Button>
         <Button className={classes.button} href={githubLink} startIcon={<GitHubIcon/>}>
-          github.com/victorsoares96
+          {githubLink}
         </Button>
       </StyledTypo>
     </div>
   );
 }
 
-export function PrincipaisProjetos() {
+export function MainProjects() {
   const classes = useStyles();
-  const { pinnedRepos } = config;
-  const [principaisRepos, setPrincipaisRepos] = useState([]);
+  const { pinnedRepos, githubUser } = config;
+  const [mainRepos, setMainRepos] = useState([]);
   const [isLoad, setLoadStatus] = useState(true);
   
   async function getRepoByName(name) {
-    const response = await axios.get(`https://api.github.com/users/victorsoares96/repos`, userAuth);
-    (response.data).map((item) => {
-      if(item.name === name) {
-        setPrincipaisRepos(oldRepos => [...oldRepos, item]);
-      }
-    });
-  }
-  
+    try {
+      const response = await axios.get(`https://api.github.com/users/${githubUser}/repos`);
+      (response.data).map((item) => {
+        if(item.name === name) {
+          setMainRepos(oldRepos => [...oldRepos, item]);
+        }
+      }); 
+    } catch (error) {
+      console.log(error);
+    }
+  }  
   useEffect(() => {
     async function load() {
       setLoadStatus(true);
@@ -86,7 +89,6 @@ export function PrincipaisProjetos() {
     }
     load();
   }, []);
-  
   const [expanded, setExpanded] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -94,17 +96,20 @@ export function PrincipaisProjetos() {
   return (
     <div>
       <StyledTypo variant="h4" gutterBottom>
-        Principais Projetos
+        Main Projects
       </StyledTypo>
       {
         isLoad === true ?
         <LoadBar/>
         :
+        mainRepos.length === 0 ?
+        <StyledTypo variant='h5'>No repositories...</StyledTypo>
+        :
         <Card elevation={0}>
           
-          <CardProjeto name={principaisRepos[0]?.name} description={principaisRepos[0]?.description}
-          html_url={principaisRepos[0]?.html_url} language={principaisRepos[0]?.language}
-          homepage={principaisRepos[0]?.homepage}/>
+          <ProjectCard name={mainRepos[0]?.name} description={mainRepos[0]?.description}
+          html_url={mainRepos[0]?.html_url} language={mainRepos[0]?.language}
+          homepage={mainRepos[0]?.homepage}/>
           <CardActions disableSpacing>
             <Button style={{marginLeft: 'auto', alignItems: 'center', display: 'flex'}} onClick={handleExpandClick} endIcon={
               <ExpandMoreIcon className={clsx(classes.expand, {
@@ -112,19 +117,19 @@ export function PrincipaisProjetos() {
               { 
                 expanded === false ? 
                 <StyledTypo variant='caption' style={{marginTop: '1px'}}>
-                  Mostrar mais
+                  Show more
                 </StyledTypo> 
                 : 
                 <StyledTypo variant='caption' style={{marginTop: '1px'}}>
-                  Mostrar menos
+                  Hide all
                 </StyledTypo>
               }
             </Button>
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             {
-              principaisRepos.map((item, index) => index !== 0 ?
-              <CardProjeto key={item.name} name={item.name} description={item.description}
+              mainRepos.map((item, index) => index !== 0 ?
+              <ProjectCard key={item.name} name={item.name} description={item.description}
               html_url={item.html_url} language={item.language} homepage={item.homepage}/>
               : [])
             }
@@ -135,7 +140,7 @@ export function PrincipaisProjetos() {
   );
 }
 
-export function Habilidades() {
+export function Skills() {
   const classes = useStyles();
   const { skills } = config;
   const [isLoad, setLoadStatus] = useState(true);
@@ -165,7 +170,7 @@ export function Habilidades() {
   return (
     <div>
       <StyledTypo variant="h4" gutterBottom>
-        Habilidades
+        Skills
       </StyledTypo>
       {
         isLoad === true ? <LoadBar/>
@@ -176,7 +181,7 @@ export function Habilidades() {
   );
 }
 
-export function Educacao() {
+export function Education() {
   const { education } = config;
   const EducationItem = ({local, graduation}) => (
     <>
@@ -187,66 +192,74 @@ export function Educacao() {
   return (
     <>
     <StyledTypo variant="h4" gutterBottom>
-      Educação
+      Education
     </StyledTypo>
-    {education.map((item) => <EducationItem local={item.local} graduation={item.graduation}/>)}
+    {education.map((item) => <EducationItem key={item.local} local={item.local} graduation={item.graduation}/>)}
     </>
   )
 }
 
-export function Linguas() {
+export function Languages() {
   const classes = useStyles();
   const { languages } = config;
-  const Lingua = ({linguas}) => (
+  const Language = ({languages}) => (
     <>
       <Box style={{display: 'flex', alignItems: 'center'}} component="div" display="inline">
-        <StyledTypo style={{margin: '5px', flexGrow: 1}}>{linguas.name}</StyledTypo>
-        <StyledTypo variant='caption' style={{margin: '5px'}}>{linguas.skill}</StyledTypo>
+        <StyledTypo style={{margin: '5px', flexGrow: 1}}>{languages.name}</StyledTypo>
+        <StyledTypo variant='caption' style={{margin: '5px'}}>{languages.skill}</StyledTypo>
       </Box>
-      <CustomLinearProgress variant="determinate" value={linguas.progress} className={classes.skillProgress}/>
+      <CustomLinearProgress variant="determinate" value={languages.progress} className={classes.skillProgress}/>
     </>
   );
   return (
     <>
     <StyledTypo variant="h4" gutterBottom>
-      Linguas
+      Languages
     </StyledTypo>
-    {languages.map((item) => <Lingua key={item.name} linguas={item}/>)}
+    {languages.map((item) => <Language key={item.name} languages={item}/>)}
     </>
   );
 }
 
-export function Curriculo() {
+export function Curriculum() {
+  const { name } = config;
   return (
     <>
       <StyledTypo variant="h4" gutterBottom>
-        Meu Curriculo
+        My Curriculum
+      </StyledTypo>
+      <StyledTypo variant="subtitle1" gutterBottom>
+        See my resume...
       </StyledTypo>
       <Box display='flex' component='div'>     
         <StyledButton style={{color: '#f5f5f5'}} variant='contained' color='primary'
-          disableElevation href={CurriculoPDF} download="João Victor Moreira Soares.pdf">
-            BAIXAR CURRICULO
+          disableElevation href={CurriculoPDF} download={`${name}.pdf`}>
+            Download
         </StyledButton>
       </Box>
     </>
   );
 }
 
-export function OutrosProjetos() {
+export function OtherProjects() {
   const classes = useStyles();
-  const { pinnedRepos } = config;
-  const [outrosRepos, setOutrosRepos] = useState([]);
+  const { pinnedRepos, githubUser } = config;
+  const [otherRepos, setOtherRepos] = useState([]);
   const [isLoad, setLoadStatus] = useState(true);
   
   async function loadOtherRepos(pinned) {
-    const response = await axios.get('https://api.github.com/users/victorsoares96/repos', userAuth);
-    let otherRepos = response.data.filter((repo) => {
-      if(repo.fork === false) {
-        return repo.name !== pinned[0] && repo.name !== pinned[1] &&
-        repo.name !== pinned[2] && repo.name !== pinned[3];
-      }
-    });
-    setOutrosRepos(otherRepos);
+    try {
+      const response = await axios.get(`https://api.github.com/users/${githubUser}/repos`);
+      let otherRepos = response.data.filter((repo) => {
+        if(repo.fork === false) {
+          return repo.name !== pinned[0] && repo.name !== pinned[1] &&
+          repo.name !== pinned[2] && repo.name !== pinned[3];
+        }
+      });
+      setOtherRepos(otherRepos);
+    } catch (error) {
+      console.log(error);  
+    }
   }
   
   useEffect(() => {
@@ -265,17 +278,20 @@ export function OutrosProjetos() {
   return (
     <div>
       <StyledTypo variant="h4" gutterBottom>
-        Outros Projetos
+        Other Projects
       </StyledTypo>
       {
         isLoad === true ?
         <LoadBar/>
         :
+        otherRepos.length === 0 ?
+        <StyledTypo variant='h5'>No repositories...</StyledTypo>
+        :
         <Card elevation={0}>
           
-          <CardProjeto name={outrosRepos[0].name} description={outrosRepos[0].description}
-          html_url={outrosRepos[0].html_url} language={outrosRepos[0].language}
-          homepage={outrosRepos[0].homepage}/>
+          <ProjectCard name={otherRepos[0]?.name} description={otherRepos[0]?.description}
+          html_url={otherRepos[0]?.html_url} language={otherRepos[0]?.language}
+          homepage={otherRepos[0]?.homepage}/>
           <CardActions disableSpacing>
             <Button style={{marginLeft: 'auto', alignItems: 'center', display: 'flex'}} onClick={handleExpandClick} endIcon={
               <ExpandMoreIcon className={clsx(classes.expand, {
@@ -283,19 +299,19 @@ export function OutrosProjetos() {
               { 
                 expanded === false ? 
                 <StyledTypo variant='caption' style={{marginTop: '1px'}}>
-                  Mostrar mais
+                  Show more {JSON.stringify(otherRepos)}
                 </StyledTypo> 
                 : 
                 <StyledTypo variant='caption' style={{marginTop: '1px'}}>
-                  Mostrar menos
+                  Hide all
                 </StyledTypo>
               }
             </Button>
           </CardActions>
           <Collapse in={expanded} timeout="auto" unmountOnExit>
             {
-              outrosRepos.map((item, index) => index !== 0 ?
-              <CardProjeto key={item.name} name={item.name} description={item.description}
+              otherRepos.map((item, index) => index !== 0 ?
+              <ProjectCard key={item.name} name={item.name} description={item.description}
               html_url={item.html_url} language={item.language} homepage={item.homepage}/>
               : [])
             }
@@ -306,25 +322,25 @@ export function OutrosProjetos() {
   );
 }
 
-export function Experiencia() {
+export function Experience() {
   return (
     <>
       <StyledTypo variant="h4" gutterBottom>
-        Experiências
+        Experience
       </StyledTypo>
       <Box display='block' component='div'>
-        <StyledTypo>A procura da primeira...</StyledTypo>
+        <StyledTypo>Search a first experience...</StyledTypo>
         <LinearProgress style={{marginTop: '5px'}}/>
       </Box>
     </>
   );
 }
 
-export function MeuGithub() {
+export function MyGithub() {
   return (
     <>
       <StyledTypo variant="h4" gutterBottom>
-        Meu GitHub
+        My GitHub
       </StyledTypo>
       <WorkInProgress/>
     </>
@@ -333,14 +349,14 @@ export function MeuGithub() {
 
 const LoadBar = () => (
   <Box display='block' component='div'>
-    <StyledTypo>Carregando...</StyledTypo>
+    <StyledTypo>Loading...</StyledTypo>
     <LinearProgress style={{marginTop: '5px'}}/>
   </Box>
 );
 
 const WorkInProgress = () => (
   <Box display='block' component='div'>
-    <StyledTypo>Em progresso...</StyledTypo>
+    <StyledTypo>In progress...</StyledTypo>
     <LinearProgress style={{marginTop: '5px'}}/>
   </Box>
 );

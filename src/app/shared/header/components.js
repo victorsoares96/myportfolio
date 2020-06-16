@@ -38,7 +38,7 @@ export function SocialMedias({data}) {
   );
 }
 
-export function Sobre() {
+export function AboutButton() {
   const classes = useStyles();
   const { sourceCodeLink } = config;
   const [open, setOpen] = React.useState(false);
@@ -51,7 +51,7 @@ export function Sobre() {
   return (
     <div>
       <Button className={classes.button} onClick={handleClickOpen}>
-        Sobre
+        About
       </Button>
       <Dialog onClose={handleClose} open={open}>
         <DialogTitle onClose={handleClose}>
@@ -59,23 +59,23 @@ export function Sobre() {
         </DialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-            React Portfolio é uma aplicação web baseada na livraria Material UI do React.js
+            React Portfolio is a web application based on the React.js Material UI library
           </Typography>
           <Typography gutterBottom>
-            Esta é uma aplicação web em formato de portfolio de programador que obtém os dados de
-            sobre, contato, principais projetos, outros projetos, habilidades e linguagens de uma API Rest
-            pessoal e da API do GitHub!
+            This is a web application in a programmer's portfolio format that obtains data from
+            about, contact, main projects, other projects, skills and languages ​​of an API Rest
+            personal and GitHub API!
           </Typography>
           <Box marginTop={5} component='div' display='block'>
-            <StyledTypo>O código fonte desta aplicação encontra-se no github:</StyledTypo>
+            <StyledTypo>The source code for this application can be found on github:</StyledTypo>
             <StyledButton href={sourceCodeLink}>
-              Acessar código fonte
+              Source Code
             </StyledButton>
           </Box>
         </DialogContent>
         <DialogActions>
           <StyledButton autoFocus onClick={handleClose} color="basic">
-            Fechar
+            Close
           </StyledButton>
         </DialogActions>
       </Dialog>

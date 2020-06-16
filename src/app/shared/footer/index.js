@@ -3,13 +3,16 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 
+import { config } from '../../config';
+
 import { useStyles } from './styles';
 function Copyright() {
+  const { name, contact } = config;
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://github.com/victorsoares96">
-        Victor Soares
+      <Link color="inherit" href={contact.githubLink}>
+        {name}
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -28,7 +31,7 @@ export default function Album() {
           Made with React Material-UI
         </Typography>
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Falar é fácil. Mostre-me o código.
+          Made with love
         </Typography>
         <Copyright />
       </footer>
