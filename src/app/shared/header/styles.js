@@ -6,7 +6,7 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 
-import { StyledTypo } from '../../../styles';
+import { StyledTypo } from '../../../globalStyles';
 
 export const useStyles = makeStyles((theme) => ({
   headerColor: {

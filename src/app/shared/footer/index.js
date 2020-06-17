@@ -5,13 +5,15 @@ import Link from '@material-ui/core/Link';
 
 import { config } from '../../config';
 
+/* Folha de estilos */
 import { useStyles } from './styles';
+
 function Copyright() {
   const { name, contact } = config;
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href={contact.githubLink}>
+      <Link color="inherit" href={`https://${contact.githubLink}`}>
         {name}
       </Link>{' '}
       {new Date().getFullYear()}
@@ -20,12 +22,11 @@ function Copyright() {
   );
 }
 
-export default function Album() {
+export default function Footer() {
   const classes = useStyles();
   return (
     <React.Fragment>
       <CssBaseline />
-      {/* Footer */}
       <footer className={classes.footer}>
         <Typography variant="h6" align="center" gutterBottom>
           Made with React Material-UI
@@ -35,7 +36,6 @@ export default function Album() {
         </Typography>
         <Copyright />
       </footer>
-      {/* End footer */}
     </React.Fragment>
   );
 }

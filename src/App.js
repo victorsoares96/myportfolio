@@ -8,18 +8,20 @@ import Footer from './app/shared/footer';
 import Home from './app/home';
 
 import usePersistedState from './utils/usePersistedState';
-import { orange, green } from "@material-ui/core/colors";
+import { green, red } from "@material-ui/core/colors";
 
 export default function App() {
+  /* Armazena o tipo do tema no local storage do navegador */
   const [theme, setTheme] = usePersistedState('theme', 'light');
   const palletType = theme === 'light' ? 'dark' : 'light'
   const onChangeTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   }
+  /* Configurações do tema */
   const theme_ = createMuiTheme({
     palette: {
       type: palletType,
-      primary: orange,
+      primary: red,
       secondary: green,
       basic: '#f5f5f5',
     },
@@ -34,7 +36,6 @@ export default function App() {
   });
   return (
     <React.Fragment>
-      <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
       <ThemeProvider theme={theme_}>
         <Header onChangeTheme={onChangeTheme} isDark={theme}/>
         <Home/>

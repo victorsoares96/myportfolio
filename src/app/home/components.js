@@ -13,10 +13,20 @@ import {
 } from '@material-ui/core';
 
 import { ProjectCard } from '../../utils/CardProjeto';
-import { StyledTypo, StyledButton, CustomLinearProgress } from '../../styles';
+
+import { 
+  StyledTypo, 
+  StyledButton, 
+  CustomLinearProgress 
+} from '../../globalStyles';
+
+/* Folha de estilos */
 import { useStyles } from './styles';
 
+/* Seu curriculo em PDF */
 import CurriculoPDF from '../../assets/curriculo.pdf';
+
+/* Arquivo com as informações pessoais */
 import { config } from '../config';
 
 /* Icones */
@@ -31,7 +41,7 @@ export function About() {
   return (
     <div>
       <StyledTypo variant="h4" gutterBottom>
-        About
+        Sobre
       </StyledTypo>
       <StyledTypo variant="body1" gutterBottom>
         {about}
@@ -46,7 +56,7 @@ export function Contact() {
   return (
     <div>
       <StyledTypo variant="h4" gutterBottom>
-        Contact
+        Contato
       </StyledTypo>
       <StyledTypo variant="body1" gutterBottom>
         <Button className={classes.button} href={locationLink} startIcon={<LocationOnIcon/>}>
@@ -55,7 +65,7 @@ export function Contact() {
         <Button className={classes.button} href={`mailto:${emailLink}`} startIcon={<MailIcon/>}>
           {emailLink}
         </Button>
-        <Button className={classes.button} href={githubLink} startIcon={<GitHubIcon/>}>
+        <Button className={classes.button} href={`https://${githubLink}`} startIcon={<GitHubIcon/>}>
           {githubLink}
         </Button>
       </StyledTypo>
@@ -69,6 +79,7 @@ export function MainProjects() {
   const [mainRepos, setMainRepos] = useState([]);
   const [isLoad, setLoadStatus] = useState(true);
   
+  /* Obtém as informações de um repositório pelo seu nome */
   async function getRepoByName(name) {
     try {
       const response = await axios.get(`https://api.github.com/users/${githubUser}/repos`);
@@ -80,7 +91,11 @@ export function MainProjects() {
     } catch (error) {
       console.log(error);
     }
-  }  
+  }
+  /* 
+    Carrega o componente principais projetos com base 
+    na array pinnedRepos(repositórios favoritos)
+  */
   useEffect(() => {
     async function load() {
       setLoadStatus(true);
@@ -89,6 +104,7 @@ export function MainProjects() {
     }
     load();
   }, []);
+
   const [expanded, setExpanded] = useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -96,14 +112,18 @@ export function MainProjects() {
   return (
     <div>
       <StyledTypo variant="h4" gutterBottom>
-        Main Projects
+        Principais Projetos
       </StyledTypo>
       {
         isLoad === true ?
         <LoadBar/>
         :
         mainRepos.length === 0 ?
-        <StyledTypo variant='h5'>No repositories...</StyledTypo>
+        /* 
+          Lembre-se que para que apareçam seus principais
+          repositórios aqui você deve incluí-los na array pinnedRepos 
+        */
+        <StyledTypo variant='h5'>Sem repositórios...</StyledTypo>
         :
         <Card elevation={0}>
           
@@ -117,11 +137,11 @@ export function MainProjects() {
               { 
                 expanded === false ? 
                 <StyledTypo variant='caption' style={{marginTop: '1px'}}>
-                  Show more
+                  Mostrar mais
                 </StyledTypo> 
                 : 
                 <StyledTypo variant='caption' style={{marginTop: '1px'}}>
-                  Hide all
+                  Mostrar menos
                 </StyledTypo>
               }
             </Button>
@@ -144,7 +164,11 @@ export function Skills() {
   const classes = useStyles();
   const { skills } = config;
   const [isLoad, setLoadStatus] = useState(true);
-  
+
+  /* 
+    Carrega todos os icones da fontawesome,
+    sem isso nenhum icone irá funcionar!
+  */
   useEffect(() => {
     setLoadStatus(true);
     const node = loadCSS(
@@ -156,6 +180,7 @@ export function Skills() {
       node.parentNode.removeChild(node);
     };
   }, []);
+  /* Componente que gera cada skill item */
   function Skill({ name, icon, progress}) {
     return (
       <>
@@ -170,7 +195,7 @@ export function Skills() {
   return (
     <div>
       <StyledTypo variant="h4" gutterBottom>
-        Skills
+        Habilidades
       </StyledTypo>
       {
         isLoad === true ? <LoadBar/>
@@ -192,7 +217,7 @@ export function Education() {
   return (
     <>
     <StyledTypo variant="h4" gutterBottom>
-      Education
+      Educação
     </StyledTypo>
     {education.map((item) => <EducationItem key={item.local} local={item.local} graduation={item.graduation}/>)}
     </>
@@ -214,7 +239,7 @@ export function Languages() {
   return (
     <>
     <StyledTypo variant="h4" gutterBottom>
-      Languages
+      Linguas
     </StyledTypo>
     {languages.map((item) => <Language key={item.name} languages={item}/>)}
     </>
@@ -226,15 +251,15 @@ export function Curriculum() {
   return (
     <>
       <StyledTypo variant="h4" gutterBottom>
-        My Curriculum
+        Meu Curriculo
       </StyledTypo>
       <StyledTypo variant="subtitle1" gutterBottom>
-        See my resume...
+        Veja um resumo sobre mim...
       </StyledTypo>
       <Box display='flex' component='div'>     
         <StyledButton style={{color: '#f5f5f5'}} variant='contained' color='primary'
           disableElevation href={CurriculoPDF} download={`${name}.pdf`}>
-            Download
+            Baixar
         </StyledButton>
       </Box>
     </>
@@ -246,7 +271,11 @@ export function OtherProjects() {
   const { pinnedRepos, githubUser } = config;
   const [otherRepos, setOtherRepos] = useState([]);
   const [isLoad, setLoadStatus] = useState(true);
-  
+  /* 
+    Carrega todos os repositórios do usuário e 
+    após isso retira os repositórios que foram 
+    colocados no pinnedRepos 
+  */
   async function loadOtherRepos(pinned) {
     try {
       const response = await axios.get(`https://api.github.com/users/${githubUser}/repos`);
@@ -261,7 +290,6 @@ export function OtherProjects() {
       console.log(error);  
     }
   }
-  
   useEffect(() => {
     async function load() {
       setLoadStatus(true);
@@ -278,14 +306,14 @@ export function OtherProjects() {
   return (
     <div>
       <StyledTypo variant="h4" gutterBottom>
-        Other Projects
+        Outros Projetos
       </StyledTypo>
       {
         isLoad === true ?
         <LoadBar/>
         :
         otherRepos.length === 0 ?
-        <StyledTypo variant='h5'>No repositories...</StyledTypo>
+        <StyledTypo variant='h5'>Sem repositórios...</StyledTypo>
         :
         <Card elevation={0}>
           
@@ -299,11 +327,11 @@ export function OtherProjects() {
               { 
                 expanded === false ? 
                 <StyledTypo variant='caption' style={{marginTop: '1px'}}>
-                  Show more {JSON.stringify(otherRepos)}
+                  Mostrar mais
                 </StyledTypo> 
                 : 
                 <StyledTypo variant='caption' style={{marginTop: '1px'}}>
-                  Hide all
+                  Mostrar menos
                 </StyledTypo>
               }
             </Button>
@@ -326,10 +354,10 @@ export function Experience() {
   return (
     <>
       <StyledTypo variant="h4" gutterBottom>
-        Experience
+        Experiência
       </StyledTypo>
       <Box display='block' component='div'>
-        <StyledTypo>Search a first experience...</StyledTypo>
+        <StyledTypo>Em busca da primeira...</StyledTypo>
         <LinearProgress style={{marginTop: '5px'}}/>
       </Box>
     </>
@@ -340,7 +368,7 @@ export function MyGithub() {
   return (
     <>
       <StyledTypo variant="h4" gutterBottom>
-        My GitHub
+        Meu GitHub
       </StyledTypo>
       <WorkInProgress/>
     </>
@@ -349,14 +377,14 @@ export function MyGithub() {
 
 const LoadBar = () => (
   <Box display='block' component='div'>
-    <StyledTypo>Loading...</StyledTypo>
+    <StyledTypo>Carregando...</StyledTypo>
     <LinearProgress style={{marginTop: '5px'}}/>
   </Box>
 );
 
 const WorkInProgress = () => (
   <Box display='block' component='div'>
-    <StyledTypo>In progress...</StyledTypo>
+    <StyledTypo>Em progresso...</StyledTypo>
     <LinearProgress style={{marginTop: '5px'}}/>
   </Box>
 );

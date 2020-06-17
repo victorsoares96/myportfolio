@@ -9,10 +9,8 @@ import {
   Typography
 } from '@material-ui/core';
 
-import { config } from '../../config';
-
 import { DialogActions, DialogContent, DialogTitle } from './styles';
-import { StyledButton, StyledTypo } from '../../../styles';
+import { StyledButton, StyledTypo } from '../../../globalStyles';
 
 import { useStyles } from './styles';
 
@@ -40,7 +38,7 @@ export function SocialMedias({data}) {
 
 export function AboutButton() {
   const classes = useStyles();
-  const { sourceCodeLink } = config;
+  const sourceCodeLink = 'https://github.com/victorsoares96/myportfolio';
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -51,7 +49,7 @@ export function AboutButton() {
   return (
     <div>
       <Button className={classes.button} onClick={handleClickOpen}>
-        About
+        Sobre
       </Button>
       <Dialog onClose={handleClose} open={open}>
         <DialogTitle onClose={handleClose}>
@@ -59,23 +57,27 @@ export function AboutButton() {
         </DialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-            React Portfolio is a web application based on the React.js Material UI library
+            React Portfolio é uma aplicação web baseada na livraria 
+            Material UI do React.js
           </Typography>
           <Typography gutterBottom>
-            This is a web application in a programmer's portfolio format that obtains data from
-            about, contact, main projects, other projects, skills and languages ​​of an API Rest
-            personal and GitHub API!
+            Esta é uma aplicação web em formato de portfolio de 
+            programador que obtém os dados de sobre, contato, 
+            principais projetos, outros projetos, habilidades e 
+            linguagens de uma API Rest pessoal e da API do GitHub!
           </Typography>
           <Box marginTop={5} component='div' display='block'>
-            <StyledTypo>The source code for this application can be found on github:</StyledTypo>
+            <StyledTypo>
+              O código fonte desta aplicação encontra-se no github:
+            </StyledTypo>
             <StyledButton href={sourceCodeLink}>
-              Source Code
+              Código fonte
             </StyledButton>
           </Box>
         </DialogContent>
         <DialogActions>
           <StyledButton autoFocus onClick={handleClose} color="basic">
-            Close
+            Fechar
           </StyledButton>
         </DialogActions>
       </Dialog>

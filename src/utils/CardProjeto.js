@@ -10,7 +10,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 
 import { getRepoLanguageImage } from './getRepoLanguageImage';
-import { StyledTypo } from '../styles';
+import { StyledTypo } from '../globalStyles';
 
 /* Icones */
 import CodeIcon from '@material-ui/icons/Code';

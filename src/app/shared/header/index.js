@@ -27,14 +27,16 @@ import Brightness7Icon from '@material-ui/icons/Brightness7';
 import Brightness4Icon from '@material-ui/icons/Brightness4';
 
 /* Custom components and stylesheet */
-import { AvatarProgress } from '../../../styles';
+import { AvatarProgress } from '../../../globalStyles';
 import { useStyles } from './styles';
 import { SocialMedias, AboutButton } from './components';
 
 export default function Header({ onChangeTheme, isDark }) {
   const classes = useStyles();
-  const { name, programmer, socialMedias, githubUser } = config;
+  const { name, programmer, socialMedias, githubUser, contactMe } = config;
   const [avatar, setAvatar] = useState(null);
+  
+  /* Carrega o avatar com a foto do usuário do github */
   useEffect(() => {
     async function loadAvatar() {
       const response = await axios.get(`https://api.github.com/users/${githubUser}`);
@@ -78,7 +80,7 @@ export default function Header({ onChangeTheme, isDark }) {
                 </Button>
               </Grid>
               <Grid item>
-                <Button href={socialMedias[5].link} variant="outlined" color="primary">
+                <Button href={contactMe} variant="outlined" color="primary">
                   Contact-me
                 </Button>
               </Grid>
